@@ -6,8 +6,11 @@
 
 = Introduction
 
-We are citing one paper @damonte-monti-2021-one,
-and then another @li-etal-2017-modeling.
+Let's cite:
+- a conference paper (bibtex entry has both DOI and URL, DOI wins): @bender-koller-2020-climbing
+- a journal paper (bibtex entry only has a DOI): @kuhlmann-etal-2015-lexicalization
+- a book (bibtex entry only has an URL): @GareyJohnsonBook
+- a "Misc" Arxiv paper (bibtex entry only has URL): @yao2023predictinggeneralizationperformancecorrectness
 
 #let bibsrc = read("custom.bib")
 #link-bib-urls(bibsrc)[
