@@ -45,21 +45,19 @@ fn create_entry(entry_type: String, entry_key: String) -> MyEntry {
     return MyEntry { entry_key: entry_key, entry_type: entry_type, fields: BTreeMap::new() };
 }
 
-fn first_last(person: &Person) -> String {
-    return format!("{} {}", person.given_name, person.name);
-}
+// fn first_last(person: &Person) -> String {
+//     return format!("{} {}", person.given_name, person.name);
+// }
 
 fn convert_entry(entry:&Entry) -> MyEntry {
     let mut ret = create_entry(entry.entry_type.to_string(), entry.key.clone());
 
     let title = entry.title().unwrap().format_sentence();
-    let authors = entry.author().unwrap();
-    let formatted_authors: Vec<String> = authors.iter().map(|person| first_last(person) ).collect();
-
-    // let x = authors[0].;
+    // let authors = entry.author().unwrap();
+    // let formatted_authors: Vec<String> = authors.iter().map(|person| first_last(person) ).collect();
 
     ret.fields.insert("title".to_string(), title);
-    ret.fields.insert("author".to_string(), formatted_authors.join(" and "));
+    // ret.fields.insert("author".to_string(), formatted_authors.join(" and "));
 
     match entry.url() {
         Ok(url) => ret.fields.insert("url".to_string(), url),

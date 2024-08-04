@@ -1,18 +1,7 @@
 
-
-
-
 #let p = plugin("bib_url_linker.wasm")
 
 #let bib_re = regex("!!BIBENTRY!([^!]+)!!")
-
-// bibliography(
-// strarray,
-// title: noneautocontent,
-// full: bool,
-// style: str,
-// ) -> content
-
 
 #let link-bib-urls(bibsrc, content) = {
   let serialized = p.get_bib_map(bytes(bibsrc))
