@@ -1,0 +1,10 @@
+
+[package]
+name = "bib-url-linker"
+version = "VERSION"
+entrypoint = "lib.typ"
+authors = ["Alexander Koller <akoller@gmail.com>"]
+license = "MIT"
+description = "Creates bibliographies in which paper titles can be links to the URL or DOI in the bib entry."
+homepage = "https://github.com/alexanderkoller/typst-bib-url-linker"
+
