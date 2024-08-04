@@ -13,8 +13,8 @@
 // style: str,
 // ) -> content
 
-#let url-bibliography(strarray, title: auto, full: false, style: "ieee") = {
-  let bibsrc = read(strarray) // TODO: handle case with multiple bibliographies
+
+#let link-bib-urls(bibsrc, content) = {
   let serialized = p.get_bib_map(bytes(bibsrc))
   let bib_map = cbor.decode(serialized)
 
@@ -40,5 +40,5 @@
     }
   }
 
-  bibliography(strarray, title: title, full: full, style: style)
+  content
 }

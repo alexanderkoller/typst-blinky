@@ -7,12 +7,17 @@ This package makes it possible to create Typst bibliographies with URL-linked ti
 ## Usage
 
 ```
-#import "bib-url-linker.typ": url-bibliography
+#import "@local/bib-url-linker:0.1.0": link-bib-urls
 
 ... @cite something ... @cite more ...
 
-#url-bibliography("custom.bib", style: "./association-for-computational-linguistics.csl")
+#let bibsrc = read("custom.bib")
+#link-bib-urls(bibsrc)[
+  #bibliography("custom.bib", style: "./association-for-computational-linguistics.csl")
+]
 ```
+
+It would be desirable to hide the fact that we are reading the same Bibtex file twice behind a single function call, but code in a Typst package [resolves all filenames relative to the package directory](https://github.com/typst/typst/issues/2126), whereas `custom.bib` and other bibliographies live in the directory of the main Typst source file. We may be able to simplify this once [#971](https://github.com/typst/typst/issues/971) gets addressed.
 
 ## CSL considerations
 
