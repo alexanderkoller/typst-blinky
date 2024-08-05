@@ -3,7 +3,7 @@
 This package permits the creation of Typst bibliographies in which paper titles are typeset as hyperlinks. Here's an example (with links typeset in blue):
 
 <center>
-<img src="https://github.com/alexanderkoller/typst-bib-url-linker/examples/screenshot.png" width="80%" />
+<img src="https://github.com/alexanderkoller/typst-bib-url-linker/blob/main/examples/screenshot.png" width="80%" />
 </center>
 
 
