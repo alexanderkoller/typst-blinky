@@ -1,8 +1,17 @@
 # Bibliography URL linker for Typst
 
+This package permits the creation of Typst bibliographies in which paper titles are typeset as hyperlinks. Here's an example (with links typeset in blue):
+
+<center>
+<img src="https://github.com/alexanderkoller/typst-bib-url-linker/examples/screenshot.png" width="80%" />
+</center>
+
+
 I love [Typst](https://typst.app/). I also love the ability of the LaTeX bibliography style of ACL, my home conference, to make the titles of papers in a bibliography hyperlinks to the URL or DOI specified in the Bibtex entry. See e.g. page 10 of [this paper](https://aclanthology.org/2020.acl-main.463/) to see what I mean.
 
 This package makes it possible to create Typst bibliographies with URL-linked titles as well.
+
+
 
 ## Usage
 
