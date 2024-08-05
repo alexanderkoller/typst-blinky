@@ -33,6 +33,6 @@ cp -r $SRC_DIR/* $TGT_DIR/
 # commit
 pushd typst-packages
 git add packages/preview/bib-url-linker/$VERSION/*
-git commit -am "added bib-url-linker $VERSION"
+git commit -am "bib-url-linker:$VERSION"
 popd
 
