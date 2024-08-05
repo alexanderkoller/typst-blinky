@@ -31,7 +31,8 @@ mkdir -p $TGT_DIR
 cp -r $SRC_DIR/* $TGT_DIR/
 
 # commit
-git add $TGT_DIR/*
+pushd typst-packages
+git add packages/preview/bib-url-linker/$VERSION/*
 git commit -am "added bib-url-linker $VERSION"
-
+popd
 

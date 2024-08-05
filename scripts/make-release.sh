@@ -25,6 +25,8 @@ rm -rf $RELEASE_DIR
 mkdir -p $RELEASE_DIR
 
 cp bib-url-linker.typ $RELEASE_DIR/lib.typ
+cp README.md $RELEASE_DIR/
+cp LICENSE $RELEASE_DIR/
 cp $PLUGIN_DIR/target/wasm32-unknown-unknown/release/bib_url_linker.wasm $RELEASE_DIR/
 
 # replace version in typst.toml
