@@ -6,17 +6,17 @@ This package permits the creation of Typst bibliographies in which paper titles 
 <img src="https://github.com/alexanderkoller/typst-bib-url-linker/blob/main/examples/screenshot.png" width="80%" />
 </center>
 
+The bibliography is generated from a Bibtex file, and citations are done with the usual Typst mechanisms. The hyperlinks are specified through DOI or URL fields in the Bibtex entries; if such a field is present, the title of the entry will be automatically typeset as a hyperlink.
 
-I love [Typst](https://typst.app/). I also love the ability of the LaTeX bibliography style of ACL, my home conference, to make the titles of papers in a bibliography hyperlinks to the URL or DOI specified in the Bibtex entry. See e.g. page 10 of [this paper](https://aclanthology.org/2020.acl-main.463/) to see what I mean.
-
-This package makes it possible to create Typst bibliographies with URL-linked titles as well.
-
+See [here](https://github.com/alexanderkoller/typst-bib-url-linker/tree/main/examples) for a full example.
 
 
 ## Usage
 
+Adding hyperlinks to your bibliography is a two-step process: (a) use a CSL style with magic symbols (explained below), and (b) enclose the `bibliography` command with the `link-bib-urls` function:
+
 ```
-#import "@local/bib-url-linker:0.1.0": link-bib-urls
+#import "@preview/bib-url-linker:0.1.0": link-bib-urls
 
 ... @cite something ... @cite more ...
 
@@ -26,19 +26,22 @@ This package makes it possible to create Typst bibliographies with URL-linked ti
 ]
 ```
 
-It would be desirable to hide the fact that we are reading the same Bibtex file twice behind a single function call, but code in a Typst package [resolves all filenames relative to the package directory](https://github.com/typst/typst/issues/2126), whereas `custom.bib` and other bibliographies live in the directory of the main Typst source file. We may be able to simplify this once [#971](https://github.com/typst/typst/issues/971) gets addressed.
+Observe that the Bibtex file `custom.bib` is loaded twice: once to load into `link-bib-urls` and once in the standard Typst `bibliography` command. Obviously, this needs to be the same file twice. See under "Alternative solutions" below why this can't be simplified further at the moment.
 
-## CSL considerations
+If a Bibtex entry contains a DOI field, the title will become a hyperlink to the DOI. Otherwise, if the Bibtex entry contains a URL field, the title will become a hyperlink to this URL. Otherwise, the title will be shown as normal, without a link.
 
-Bib-url-linker uses the standard Typst `#bibliography` command to typeset most of the bibliography. You can, in principle, use any CSL style.
 
-However, in order to get the paper titles replaced by links, you need to modify the CSL style you want to use. In every place where you would usually have the paper title, i.e.
+## CSL with magic symbols
+
+The bib-url-linker generates the hyperlinked titles through a regex show rule that replaces a "magic symbol" with a [link](https://typst.app/docs/reference/model/link/) command. This "magic symbol" is a string of the form `!!BIBENTRY!<key>!!`, where `<key>` is the Bibtex citation key of the reference.
+
+You will therefore need to tweak your CSL style to use it with the bib-url-linker. Specifically, in every place where you would usually have the paper title, i.e.
 
 ```
 <text variable="title" prefix=" " suffix=". "/>
 ```
 
-or similar, your CSL file now instead needs to print a decorated version of the paper's citation-key (aka "key" in Bibtex):
+or similar, your CSL file now instead needs to print a decorated version of the paper's citation-key (= Bibtex key):
 
 ```
 <text variable="citation-key" prefix=" !!BIBENTRY!" suffix="!!. " />
@@ -46,19 +49,18 @@ or similar, your CSL file now instead needs to print a decorated version of the 
 
 You can have more prefix before and suffix after the `!!BIBENTRY!` and `!!`, as in the example, but these magic symbols need to be there so bib-url-linker can find the places in the document where the hyperlinked title needs to be inserted.
 
-
-## Limitations
-
-- Currently, bib-url-linker works only with a single Bibtex bibliography.
+You can check the [example CSL file](https://github.com/alexanderkoller/typst-bib-url-linker/blob/main/examples/association-for-computational-linguistics.csl) to see what this looks like in practice; compare to [the unmodified original](https://github.com/citation-style-language/styles/blob/master/association-for-computational-linguistics.csl).
 
 
-## Alternatives
+## Alternative solutions
 
 The current mechanism in bib-url-linker is somewhat heavy-handed: a Typst plugin uses the [biblatex](https://github.com/typst/biblatex) crate to parse the Bibtex file (independently of the normal operations of the `bibliograph` command), and then all occurrences of the magic symbol in the Typst bibliography are replaced by the hyperlinked titles.
 
-It would be great to replace this mechanism by something simpler, but all alternatives that I could think of don't work. Here are some of them:
+It would be great to replace this mechanism by something simpler, but it is actually remarkably tricky to make bibliography titles hyperlinks with the current version of Typst (0.11.1). All the alternatives that I could think of don't work. Here are some of them:
 
-- Print the URL/DOI using the CSL style, and then use a regex show rule to convert it into a `#link` around the title somehow. This does not work because most URLs contain a colon character (:), and these [cause trouble with Typst regexes](https://github.com/typst/typst/issues/86).
-- Make the CSL style output text of the form `#link(url)[title]`. This does not work because the content generated by CSL is not evaluated further by Typst. Also, Typst [does not support show rules for the individual bibliography items](https://github.com/typst/typst/issues/942), which makes it tricky to call `#eval` on them.
-- Create a show rule for `#link`. Some CSL styles already generate `#link` elements if a URL/DOI is present in the bib entry - one could consider replacing it with a `#link` whose URL is the same as before, but the text is a link symbol or some such. However, a show rule for a link that generates another link runs into an infinite recursion; Typst made [the deliberate decision](https://github.com/typst/typst/pull/3327) to handle such recursions only for `text` show rules.
+- Print the URL/DOI using the CSL style, and then use a regex show rule to convert it into a `link` around the title somehow. This does not work because most URLs contain a colon character (:), and these [cause trouble with Typst regexes](https://github.com/typst/typst/issues/86).
+- Make the CSL style output text of the form `#link(url)[title]`. This does not work because the content generated by CSL is not evaluated further by Typst. Also, Typst [does not support show rules for the individual bibliography items](https://github.com/typst/typst/issues/942), which makes it tricky to call [eval](https://typst.app/docs/reference/foundations/eval/) on them.
+- Create a show rule for `link`. Some CSL styles already generate `link` elements if a URL/DOI is present in the bib entry - one could consider replacing it with a `link` whose URL is the same as before, but the text is a link symbol or some such. However, a show rule for a link that generates another link runs into an infinite recursion; Typst made [the deliberate decision](https://github.com/typst/typst/pull/3327) to handle such recursions only for `text` show rules.
+- The best solution would be to simply use an unmodified CSL file, but it is not clear to me how one would pick out the paper title from the bibliography in a general way. I'm afraid that any solution that hyperlinks titles will require modifications to the CSL style.
 
+It would furthermore be desirable to hide the fact that we are reading the same Bibtex file twice behind a single function call. However, code in a Typst package [resolves all filenames relative to the package directory](https://github.com/typst/typst/issues/2126), which means that the package cannot access a bibliography file outside of the package directory. We may be able to simplify this once [#971](https://github.com/typst/typst/issues/971) gets addressed.
