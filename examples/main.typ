@@ -16,6 +16,6 @@ Let's cite:
 
 #let bibsrc = read("custom.bib")
 #link-bib-urls(bibsrc)[
-  #bibliography("custom.bib", style: "./association-for-computational-linguistics.csl")
+  #bibliography("custom.bib", style: "./association-for-computational-linguistics-blinky.csl")
 ]
 

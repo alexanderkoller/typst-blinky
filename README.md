@@ -1,14 +1,14 @@
-# Bibliography URL linker for Typst
+# Blinky: Bibliography Linker for Typst
 
 This package permits the creation of Typst bibliographies in which paper titles are typeset as hyperlinks. Here's an example (with links typeset in blue):
 
 <center>
-<img src="https://github.com/alexanderkoller/typst-bib-url-linker/blob/main/examples/screenshot.png" width="80%" />
+<img src="https://github.com/alexanderkoller/typst-blinky/blob/main/examples/screenshot.png" width="80%" />
 </center>
 
 The bibliography is generated from a Bibtex file, and citations are done with the usual Typst mechanisms. The hyperlinks are specified through DOI or URL fields in the Bibtex entries; if such a field is present, the title of the entry will be automatically typeset as a hyperlink.
 
-See [here](https://github.com/alexanderkoller/typst-bib-url-linker/tree/main/examples) for a full example.
+See [here](https://github.com/alexanderkoller/typst-blinky/tree/main/examples) for a full example.
 
 
 ## Usage
@@ -16,13 +16,13 @@ See [here](https://github.com/alexanderkoller/typst-bib-url-linker/tree/main/exa
 Adding hyperlinks to your bibliography is a two-step process: (a) use a CSL style with magic symbols (explained below), and (b) enclose the `bibliography` command with the `link-bib-urls` function:
 
 ```
-#import "@preview/bib-url-linker:0.1.0": link-bib-urls
+#import "@preview/blinky:0.1.0": link-bib-urls
 
 ... @cite something ... @cite more ...
 
 #let bibsrc = read("custom.bib")
 #link-bib-urls(bibsrc)[
-  #bibliography("custom.bib", style: "./association-for-computational-linguistics.csl")
+  #bibliography("custom.bib", style: "./association-for-computational-linguistics-blinky.csl")
 ]
 ```
 
@@ -33,9 +33,9 @@ If a Bibtex entry contains a DOI field, the title will become a hyperlink to the
 
 ## CSL with magic symbols
 
-The bib-url-linker generates the hyperlinked titles through a regex show rule that replaces a "magic symbol" with a [link](https://typst.app/docs/reference/model/link/) command. This "magic symbol" is a string of the form `!!BIBENTRY!<key>!!`, where `<key>` is the Bibtex citation key of the reference.
+Blinky generates the hyperlinked titles through a regex show rule that replaces a "magic symbol" with a [link](https://typst.app/docs/reference/model/link/) command. This "magic symbol" is a string of the form `!!BIBENTRY!<key>!!`, where `<key>` is the Bibtex citation key of the reference.
 
-You will therefore need to tweak your CSL style to use it with the bib-url-linker. Specifically, in every place where you would usually have the paper title, i.e.
+You will therefore need to tweak your CSL style to use it with Blinky. Specifically, in every place where you would usually have the paper title, i.e.
 
 ```
 <text variable="title" prefix=" " suffix=". "/>
@@ -47,14 +47,14 @@ or similar, your CSL file now instead needs to print a decorated version of the 
 <text variable="citation-key" prefix=" !!BIBENTRY!" suffix="!!. " />
 ```
 
-You can have more prefix before and suffix after the `!!BIBENTRY!` and `!!`, as in the example, but these magic symbols need to be there so bib-url-linker can find the places in the document where the hyperlinked title needs to be inserted.
+You can have more prefix before and suffix after the `!!BIBENTRY!` and `!!`, as in the example, but these magic symbols need to be there so Blinky can find the places in the document where the hyperlinked title needs to be inserted.
 
-You can check the [example CSL file](https://github.com/alexanderkoller/typst-bib-url-linker/blob/main/examples/association-for-computational-linguistics.csl) to see what this looks like in practice; compare to [the unmodified original](https://github.com/citation-style-language/styles/blob/master/association-for-computational-linguistics.csl).
+You can check the [example CSL file](https://github.com/alexanderkoller/typst-blinky/blob/main/examples/association-for-computational-linguistics-blinky.csl) to see what this looks like in practice; compare to [the unmodified original](https://github.com/citation-style-language/styles/blob/master/association-for-computational-linguistics.csl).
 
 
 ## Alternative solutions
 
-The current mechanism in bib-url-linker is somewhat heavy-handed: a Typst plugin uses the [biblatex](https://github.com/typst/biblatex) crate to parse the Bibtex file (independently of the normal operations of the `bibliograph` command), and then all occurrences of the magic symbol in the Typst bibliography are replaced by the hyperlinked titles.
+The current mechanism in Blinky is somewhat heavy-handed: a Typst plugin uses the [biblatex](https://github.com/typst/biblatex) crate to parse the Bibtex file (independently of the normal operations of the `bibliography` command), and then all occurrences of the magic symbol in the Typst bibliography are replaced by the hyperlinked titles.
 
 It would be great to replace this mechanism by something simpler, but it is actually remarkably tricky to make bibliography titles hyperlinks with the current version of Typst (0.11.1). All the alternatives that I could think of don't work. Here are some of them:
 
