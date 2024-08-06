@@ -19,7 +19,7 @@ if [ ! -d typst-packages ]; then
     git clone https://github.com/alexanderkoller/$GITHUB_PACKAGE
 fi
 
-pushd typst-packages
+pushd $GITHUB_PACKAGE
 git pull # synchronize with our own changes
 git pull https://github.com/typst/packages # synchronize with global changes
 popd
