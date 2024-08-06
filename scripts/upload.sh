@@ -8,14 +8,15 @@ then
     exit 1
 fi
 
-SRC_DIR=preview/bib-url-linker/$VERSION
-TGT_DIR=typst-packages/packages/preview/bib-url-linker/$VERSION
+GITHUB_PACKAGE=typst-packages-blinky-$VERSION
+SRC_DIR=preview/blinky/$VERSION
+TGT_DIR=$GITHUB_PACKAGE/packages/preview/blinky/$VERSION
 
 cd release
 
 # make sure that we have a clone of our fork
 if [ ! -d typst-packages ]; then
-    git clone https://github.com/alexanderkoller/typst-packages.git
+    git clone https://github.com/alexanderkoller/$GITHUB_PACKAGE
 fi
 
 pushd typst-packages
@@ -31,8 +32,8 @@ mkdir -p $TGT_DIR
 cp -r $SRC_DIR/* $TGT_DIR/
 
 # commit
-pushd typst-packages
-git add packages/preview/bib-url-linker/$VERSION/*
-git commit -am "bib-url-linker:$VERSION"
+pushd $GITHUB_PACKAGE
+git add packages/preview/blinky/$VERSION/*
+git commit -am "blinky:$VERSION"
 popd
 
