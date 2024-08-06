@@ -1,4 +1,4 @@
-#import "@local/bib-url-linker:0.1.0": link-bib-urls
+#import "@local/blinky:0.1.0": link-bib-urls
 
 #let darkblue = rgb("000099")
 #show cite: set text(fill: darkblue)

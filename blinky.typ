@@ -1,5 +1,5 @@
 
-#let p = plugin("bib_url_linker.wasm")
+#let p = plugin("blinky.wasm")
 
 #let bib_re = regex("!!BIBENTRY!([^!]+)!!")
 

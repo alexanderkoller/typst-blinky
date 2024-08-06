@@ -1,10 +1,10 @@
 
 [package]
-name = "bib-url-linker"
+name = "blinky"
 version = "VERSION"
 entrypoint = "lib.typ"
 authors = ["Alexander Koller <akoller@gmail.com>"]
 license = "MIT"
 description = "Typesets paper titles in bibliographies as hyperlinks."
-repository = "https://github.com/alexanderkoller/typst-bib-url-linker"
+repository = "https://github.com/alexanderkoller/blinky"
 

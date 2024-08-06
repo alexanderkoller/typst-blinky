@@ -9,8 +9,8 @@ then
 fi
 
 
-RELEASE_DIR=release/preview/bib-url-linker/$VERSION
-PLUGIN_DIR=plugin/bib-url-linker/plugin
+RELEASE_DIR=release/preview/blinky/$VERSION
+PLUGIN_DIR=plugin/blinky/plugin
 
 # Check that WASM is up to date.
 
@@ -24,10 +24,10 @@ popd
 rm -rf $RELEASE_DIR
 mkdir -p $RELEASE_DIR
 
-cp bib-url-linker.typ $RELEASE_DIR/lib.typ
+cp blinky.typ $RELEASE_DIR/lib.typ
 cp README.md $RELEASE_DIR/
 cp LICENSE $RELEASE_DIR/
-cp $PLUGIN_DIR/target/wasm32-unknown-unknown/release/bib_url_linker.wasm $RELEASE_DIR/
+cp $PLUGIN_DIR/target/wasm32-unknown-unknown/release/blinky.wasm $RELEASE_DIR/
 
 # replace version in typst.toml
 sed "s/VERSION/$VERSION/g" typst-template.toml > $RELEASE_DIR/typst.toml
