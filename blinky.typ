@@ -5,7 +5,7 @@
 
 #let link-bib-urls(bibsrc, content) = {
   let serialized = p.get_bib_map(bytes(bibsrc))
-  let bib_map = cbor.decode(serialized)
+  let bib_map = cbor(serialized)
 
   show bib_re: it => {
     let (key,) = it.text.match(bib_re).captures
