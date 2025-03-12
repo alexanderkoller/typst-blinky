@@ -64,3 +64,10 @@ It would be great to replace this mechanism by something simpler, but it is actu
 - The best solution would be to simply use an unmodified CSL file, but it is not clear to me how one would pick out the paper title from the bibliography in a general way. I'm afraid that any solution that hyperlinks titles will require modifications to the CSL style.
 
 It would furthermore be desirable to hide the fact that we are reading the same Bibtex file twice behind a single function call. However, code in a Typst package [resolves all filenames relative to the package directory](https://github.com/typst/typst/issues/2126), which means that the package cannot access a bibliography file outside of the package directory. We may be able to simplify this once [#971](https://github.com/typst/typst/issues/971) gets addressed.
+
+
+## Contributors
+
+Thank you to:
+
+- [scrouthtv](https://github.com/scrouthtv) for contributing a pull request that fixed [#5](https://github.com/alexanderkoller/typst-blinky/issues/5) (cbor decoding in Typst 0.13)
