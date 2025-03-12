@@ -1,7 +1,7 @@
 
 [package]
 name = "blinky"
-version = "0.1.0"
+version = "VERSION"
 compiler = "0.13.0"
 entrypoint = "lib.typ"
 authors = ["Alexander Koller <akoller@gmail.com>"]
