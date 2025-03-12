@@ -1,11 +1,10 @@
 
 #let p = plugin("blinky.wasm")
 
-#let bib_re = regex("!!BIBENTRY!([^!]+)!!")
-
 #let link-bib-urls(bibsrc, content) = {
   let serialized = p.get_bib_map(bytes(bibsrc))
   let bib_map = cbor(serialized)
+  let bib_re = regex("!!BIBENTRY!([^!]+)!!")
 
   show bib_re: it => {
     let (key,) = it.text.match(bib_re).captures
