@@ -28,17 +28,20 @@
   <macro name="linked-title">
     <!-- for blinky -->
     <choose>
-        <!-- TODO: default needs to be italic, should list the non-italics here -->
-        <if type="book article-journal book thesis pamphlet report" match="any">
+        <!--
+        non-italics: article-journal chapter pamphlet paper-conference techreport (misc)
+        italics: book thesis 
+        -->
+        <if type="book thesis" match="any">
             <choose>
                 <if variable="DOI">
                     <group delimiter=" " prefix="<_<" suffix=">_>">
                         <text variable="DOI" suffix="|||" prefix="https://doi.org/" />
-                        <text variable="title" prefix="XX" />
+                        <text variable="title" />
                     </group>
                 </if>
                 <else-if variable="URL">
-                    <group delimiter=" " prefix="<<<" suffix=">>>">
+                    <group delimiter=" " prefix="<_<" suffix=">_>">
                         <text variable="URL" suffix="|||" />
                         <text variable="title" />
                     </group>
