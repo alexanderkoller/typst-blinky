@@ -1,5 +1,1 @@
-
-!!BIBENTRY!http://test.com/foo!titel!!
-
-!!BIBENTRY!10.18653/v1/2020.acl-main.463!Climbing
-towards NLU: On Meaning, Form, and Understanding in the Age of Data!!
+<<<10.18653/v1/2020.acl-main.463||| Paper title>>>

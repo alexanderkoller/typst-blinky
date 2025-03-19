@@ -34,6 +34,8 @@ This does not work:
  #show link: it => {
     if it.body.text == it.dest { // apply only to original link
       it.body
+    } else if "https://doi.org/" + it.body.text == it.dest { // for DOI links
+      it.body
     } else {
       it
     }
@@ -41,4 +43,15 @@ This does not work:
 
 #let bibstr = "@inproceedings{paperkey, title = \"Paper title\", author = \"Author1 and Author2\", booktitle = \"Proceedings of Conf\", year = \"2020\", url=\"https://aclanthology.org/2020.acl-main.463\"}"
 
-#bibliography(bytes(bibstr), style: "association-for-computational-linguistics-blinky-0.2.csl")
+#let bibstr2 = "@inproceedings{paperkey, title = \"Paper title\", author = \"Author1 and Author2\", booktitle = \"Proceedings of Conf\", year = \"2020\"}"
+
+#let bibstr3 = "@inproceedings{paperkey, title = \"Paper title\", author = \"Author1 and Author2\", booktitle = \"Proceedings of Conf\", year = \"2020\", doi=\"10.18653/v1/2020.acl-main.463\"}"
+
+#let bibstr4 = "@inproceedings{paperkey, title = \"Paper title\", author = \"Author1 and Author2\", booktitle = \"Proceedings of Conf\", year = \"2020\", url=\"https://doi.org/10.18653/v1/2020.acl-main.463\"}"
+
+
+
+#bibliography(bytes(bibstr2), style: "./examples/acl-with-macros.csl")
+
+#let a = read("x.txt")
+#a

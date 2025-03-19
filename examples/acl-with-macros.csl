@@ -25,6 +25,50 @@
     <updated>2013-11-20T21:00:00Z</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
+  <macro name="linked-title">
+    <!-- for blinky -->
+    <choose>
+        <!-- TODO: default needs to be italic, should list the non-italics here -->
+        <if type="book article-journal book thesis pamphlet report" match="any">
+            <choose>
+                <if variable="DOI">
+                    <group delimiter=" " prefix="<_<" suffix=">_>">
+                        <text variable="DOI" suffix="|||" prefix="https://doi.org/" />
+                        <text variable="title" prefix="XX" />
+                    </group>
+                </if>
+                <else-if variable="URL">
+                    <group delimiter=" " prefix="<<<" suffix=">>>">
+                        <text variable="URL" suffix="|||" />
+                        <text variable="title" />
+                    </group>
+                </else-if>
+                <else> <!-- no URL or DOI -->
+                    <text variable="title" />
+                </else>
+            </choose>
+        </if>
+        <else>
+            <choose>
+                <if variable="DOI">
+                    <group delimiter=" " prefix="<<<" suffix=">>>">
+                        <text variable="DOI" suffix="|||" prefix="https://doi.org/" />
+                        <text variable="title" />
+                    </group>
+                </if>
+                <else-if variable="URL">
+                    <group delimiter=" " prefix="<<<" suffix=">>>">
+                        <text variable="URL" suffix="|||" />
+                        <text variable="title" />
+                    </group>
+                </else-if>
+                <else> <!-- no URL or DOI -->
+                    <text variable="title" />
+                </else>
+            </choose>
+        </else>
+    </choose>
+  </macro>
   <macro name="author">
     <names variable="author">
       <name form="long" and="text" delimiter=", "/>
@@ -203,11 +247,7 @@
       <choose>
         <!-- corresponds to "article" in bibtex -->
         <if type="article-journal">
-          <!-- for blinky -->
-          <group delimiter=" " prefix=" <<<" suffix=">>>. ">
-            <text variable="URL" suffix="|||" />
-            <text variable="title" />
-          </group>
+          <text macro="linked-title" prefix=" " suffix=". " />
           <group prefix=" " suffix=".">
             <text variable="container-title" font-style="italic"/>
             <text variable="volume" prefix=", "/>
@@ -217,10 +257,7 @@
         </if>
         <!-- corresponds to "proceedings", "manual", "book", and "periodical" in bibtex -->
         <else-if type="book">
-          <group delimiter=" " prefix=" <<<" suffix=">>>. " > <!-- for blinky -->
-            <text variable="URL" suffix="|||" />
-            <text variable="title" font-style="italic" />
-          </group>
+          <text macro="linked-title" prefix=" " suffix=". " />
           <group delimiter=", " suffix=".">
             <text macro="volume-and-collection-title"/>
           </group>
@@ -232,10 +269,7 @@
         </else-if>
         <!-- corresponds to "inbook" and "incollection" in bibtex -->
         <else-if type="chapter">
-          <group delimiter=" " prefix=" <<<" suffix=">>>."> <!-- for blinky -->
-            <text variable="URL" suffix="|||" />
-            <text variable="title" font-style="italic" />
-          </group>
+          <text macro="linked-title" prefix=" " suffix="." />
           <text term="in" text-case="capitalize-first" prefix=" " suffix=" "/>
           <group delimiter=", " suffix=".">
             <text macro="editor"/>
@@ -258,21 +292,14 @@
         </else-if>
         <!-- corresponds to "booklet" in bibtex -->
         <else-if type="pamphlet">
-          <group delimiter=" " prefix=" <<<" suffix=">>>."> <!-- for blinky -->
-            <text variable="URL" suffix="|||" />
-            <text variable="title" font-style="italic" />
-          </group>
+          <text macro="linked-title" prefix=" " suffix="." />
           <group delimiter=", " prefix=" " suffix=".">
             <text variable="publisher-place"/>
           </group>
         </else-if>
         <!-- corresponds to "inproceedings" and "conference" in bibtex -->
         <else-if type="paper-conference">
-          <!-- for blinky -->
-          <group delimiter=" " prefix=" <<<" suffix=">>>. ">
-            <text variable="URL" suffix="|||" />
-            <text variable="title" />
-          </group>
+          <text macro="linked-title" prefix=" " suffix=". " />
           <text term="in" text-case="capitalize-first" suffix=" "/>
           <group suffix="." delimiter=", ">
             <text macro="editor"/>
@@ -292,10 +319,7 @@
         </else-if>
         <!-- corresponds to "techreport" in bibtex -->
         <else-if type="report">
-          <group delimiter=" " prefix=" <<<" suffix=">>>."> <!-- for blinky -->
-            <text variable="URL" suffix="|||" />
-            <text variable="title" font-style="italic" />
-          </group>
+          <text macro="linked-title" prefix=" " suffix="." />
           <!-- <text variable="title" prefix=" " suffix="."/> -->
           <group delimiter=", " prefix=" " suffix=".">
             <text macro="technical-report"/>
@@ -305,10 +329,7 @@
         </else-if>
         <!-- corresponds to "phdthesis" and "masterthesis" in bibtex -->
         <else-if type="thesis">
-          <group delimiter=" " prefix=" <<<" suffix=">>>."> <!-- for blinky -->
-            <text variable="URL" suffix="|||" />
-            <text variable="title" font-style="italic" />
-          </group>
+          <text macro="linked-title" prefix=" " suffix="." />
           <group delimiter=", " prefix=" " suffix=".">
             <!-- If you want to output text other than "Ph.D thesis", specify the "genre" field to an appropriate value like "Master's thesis".-->
             <text macro="thesis-type"/>
@@ -318,11 +339,7 @@
         </else-if>
         <!-- misc. -->
         <else>
-          <group delimiter=" " prefix=" <<<" suffix=">>>. "> <!-- for blinky -->
-            <text variable="URL" suffix="|||" />
-            <text variable="title" font-style="italic" />
-          </group>
-          <text variable="citation-key" prefix=" !!BIBENTRY!" suffix="!!." />
+          <text macro="linked-title" prefix=" " suffix="." />
           <!-- <text variable="title" prefix=" " suffix="."/> -->
         </else>
       </choose>
