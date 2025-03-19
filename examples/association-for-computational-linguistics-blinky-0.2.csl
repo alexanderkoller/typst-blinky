@@ -262,7 +262,7 @@
         <!--
           <text variable="title" prefix=" " suffix=". "/>
           -->
-          <text variable="note" prefix=" !!BIBENTRY!" />
+          <text variable="URL" prefix=" !!BIBENTRY!" />
           <text variable="title" prefix="!" suffix="!!. " />
           <!-- <text variable="citation-key" prefix=" !!BIBENTRY!" suffix="!!.  " /> -->
           <text term="in" text-case="capitalize-first" suffix=" "/>

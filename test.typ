@@ -14,8 +14,8 @@ If, as in the current experimental version, the DOI is stored in the `note` fiel
 
 #show bib_re: it => {
     let (a,b) = it.text.match(bib_re).captures
-    // [(#a) (#b)]
-    link(a)[#b]
+    [(#a) (#b)]
+    // link(a)[#b]
 }
 
 #let x = read("x.txt")
@@ -23,10 +23,16 @@ If, as in the current experimental version, the DOI is stored in the `note` fiel
 
 @bender-koller-2020-climbing
 
-#show bibliography: it => {
-  [xxxx]
-  it
-  [xzzzz]
-}
+// #show bibliography: it => {
+//   show link: it => it.body
+//   it
+// }
+
+// #show link: it => context {
+//   [#here().position()]
+//   it 
+// }
+
+// #show link: it => it.body
 
 #bibliography("examples/custom.bib", style: "examples/association-for-computational-linguistics-blinky-0.2.csl")
