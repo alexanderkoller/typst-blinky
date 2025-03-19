@@ -1,8 +1,9 @@
-#import "@local/blinky:0.1.2": link-bib-urls
+#import "@local/blinky:0.2.0": link-bib-urls
 
 #let darkblue = rgb("000099")
 #show cite: set text(fill: darkblue)
-#show link: set text(fill: darkblue)
+
+// #show link: set text(fill: darkblue)
 
 
 = Introduction
@@ -14,8 +15,8 @@ Let's cite:
 - a "Misc" Arxiv paper (bibtex entry only has URL): @yao2023predictinggeneralizationperformancecorrectness
 
 
-#let bibsrc = read("custom.bib")
-#link-bib-urls(bibsrc)[
-  #bibliography("custom.bib", style: "./association-for-computational-linguistics-blinky.csl")
+// #let bibsrc = read("custom.bib")
+#link-bib-urls(link-fill: darkblue)[
+  #bibliography("custom.bib", style: "./acl-with-macros.csl")
 ]
 

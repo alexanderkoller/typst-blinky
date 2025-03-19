@@ -1,18 +1,11 @@
 
 #let darkblue = rgb("000099")
 #show cite: set text(fill: darkblue)
-// #show link: set text(fill: darkblue)
 
-
-// #let get-text(link-el) = {
-//   if link-el.body.has("child") {
-//     link-el.body.at("child").text
-//   } else {
-//     link-el.body.text
-//   }
-// }
 
 #let link-bib-urls(link-fill: blue, content) = {
+  // Typst converts URLs and DOIs into links -- get rid of the links and
+  // restore the actual URLs and DOIs, otherwise the regexes don't match.
   show link: it => {
     if it.body.text == it.dest { // apply only to original link
       it.body
@@ -23,30 +16,25 @@
     }
   }
 
-  // this show rule matches the magic prefixes and suffixes ...
+  // Match the magic pattern for <<<url|||title>>> and replace by links.
+  // These code snippets are by user Philipp on the Typst forum,
+  // https://forum.typst.app/t/how-can-i-configure-linking-and-color-in-my-bibliography
   let link-magic = regex("<<<(.*)\|\|\|\s*(.*)>>>")
   show link-magic: it => {
-    // ... and renders it as a custom link
     set text(fill: link-fill)
     link(..it.text.matches(link-magic).first().captures)
   }
 
+  // Match the magic pattern for <_<url||title>_> and replace by
+  // links styled in italics.
   let italic-link-magic = regex("<_<(.*)\|\|\|\s*(.*)>_>")
   show italic-link-magic: it => {
-    // ... and renders it as a custom link
     set text(fill: link-fill)
     text(style: "italic")[#link(..it.text.matches(italic-link-magic).first().captures)]
   }
 
   content
 }
-
- 
-
-// // minimal example that shows that regex does not match across styled content
-// #show regex("aaa"): "bbb"
-// a#text(style: "italic")[aa]
-
 
 
 
