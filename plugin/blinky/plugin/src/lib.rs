@@ -40,6 +40,23 @@ pub fn get_bib_map(bib_contents_u8: &[u8]) -> Vec<u8> {
 }
 
 
+fn convert_chunks_to_string(chunks: &Chunks) -> String {
+    // You can choose the formatting method here; for example, to use `format_verbatim`
+    chunks.format_verbatim()
+}
+
+fn insert_converted_fields(
+    original_map: BTreeMap<String, Chunks>, 
+    target_map: &mut BTreeMap<String, String>
+) {
+    for (key, value) in original_map {
+        // Convert the `Chunks` into a `String`
+        let converted_value = convert_chunks_to_string(&value);
+        
+        // Insert into the target map
+        target_map.insert(key, converted_value);
+    }
+}
 
 fn create_entry(entry_type: String, entry_key: String) -> MyEntry {
     return MyEntry { entry_key: entry_key, entry_type: entry_type, fields: BTreeMap::new() };
@@ -59,6 +76,8 @@ fn convert_entry(entry:&Entry) -> MyEntry {
     ret.fields.insert("title".to_string(), title);
     // ret.fields.insert("author".to_string(), formatted_authors.join(" and "));
 
+    insert_converted_fields(entry.fields.clone(), &mut ret.fields);
+
     match entry.url() {
         Ok(url) => ret.fields.insert("url".to_string(), url),
         _ => Some("".to_string())
@@ -69,10 +88,12 @@ fn convert_entry(entry:&Entry) -> MyEntry {
         _ => Some("".to_string())
     };
 
-    let keys: String = entry.fields.keys()
-                          .map(|key| key.to_string())
-                          .collect::<Vec<String>>()
-                          .join(", "); // Join the keys with commas
+    // let keys: String = entry.fields.keys()
+    //                       .map(|key| key.to_string())
+    //                       .collect::<Vec<String>>()
+    //                       .join(", "); // Join the keys with commas
+
+    
 
     // ret.fields.insert("fields".to_string(), keys.to_string());
 
