@@ -71,3 +71,17 @@ It would furthermore be desirable to hide the fact that we are reading the same 
 Thank you to:
 
 - [scrouthtv](https://github.com/scrouthtv) for contributing a pull request that fixed [#5](https://github.com/alexanderkoller/typst-blinky/issues/5) (cbor decoding in Typst 0.13)
+
+
+## Compiling plugin from scratch
+
+(This is deprecated, but perhaps useful if we want to resurrect the plugin.)
+
+```
+brew install rustup
+rustup default stable
+rustup target add wasm32-unknown-unknown
+./scripts/make-release.sh x.y.z
+```
+
+Do _not_ install rust directly, see [here](https://stackoverflow.com/questions/66252428/errore0463-cant-find-crate-for-core-note-the-wasm32-unknown-unknown-t).

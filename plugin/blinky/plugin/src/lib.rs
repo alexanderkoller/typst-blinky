@@ -69,6 +69,13 @@ fn convert_entry(entry:&Entry) -> MyEntry {
         _ => Some("".to_string())
     };
 
+    let keys: String = entry.fields.keys()
+                          .map(|key| key.to_string())
+                          .collect::<Vec<String>>()
+                          .join(", "); // Join the keys with commas
+
+    // ret.fields.insert("fields".to_string(), keys.to_string());
+
     return ret;
 }
 
