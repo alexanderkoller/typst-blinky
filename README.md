@@ -16,12 +16,11 @@ See [here](https://github.com/alexanderkoller/typst-blinky/tree/main/examples) f
 Adding hyperlinks to your bibliography is a two-step process: (a) use a CSL style with magic symbols (explained below), and (b) enclose the `bibliography` command with the `link-bib-urls` function:
 
 ```
-#import "@preview/blinky:0.1.0": link-bib-urls
+#import "@preview/blinky:0.2.0": link-bib-urls
 
 ... @cite something ... @cite more ...
 
-#let bibsrc = read("custom.bib")
-#link-bib-urls(bibsrc)[
+#link-bib-urls()[
   #bibliography("custom.bib", style: "./association-for-computational-linguistics-blinky.csl")
 ]
 ```
