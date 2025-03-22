@@ -43,9 +43,11 @@ You will therefore need to tweak your CSL style to use it with Blinky. Specifica
 or similar, your CSL file now instead needs to print the magic expression:
 
 ```
-<text variable="URL" prefix="<<<" suffix="|||" />
-<text variable="title" suffix=">>>" />
+<text variable="URL" prefix=" <<<" suffix="|||" />
+<text variable="title" suffix=">>>. " />
 ```
+
+Note how the prefix and suffix of the original title were added to the prefix and suffix of the magic expression.
 
 You can define a [CSL macro](https://docs.citationstyles.org/en/stable/specification.html#macro) that will generate the magic expression and then use it everywhere that the original CSL printed a paper title.
 
