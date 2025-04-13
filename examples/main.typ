@@ -17,6 +17,7 @@ Let's cite:
 
 // #let bibsrc = read("custom.bib")
 #link-bib-urls(link-fill: darkblue)[
-  #bibliography("custom.bib", style: "./acl-with-macros.csl")
+  #bibliography("custom.bib", style: "./association-for-computational-linguistics-blinky.csl")
+  // #bibliography("custom.bib", style: "./apa-blinky.csl")
 ]
 
