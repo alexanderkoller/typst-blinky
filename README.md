@@ -1,5 +1,8 @@
 # Blinky: Bibliography Linker for Typst
 
+**I no longer maintain this package actively,
+but I invite you use [Pergamon](https://github.com/alexanderkoller/pergamon) instead.**
+
 This package permits the creation of Typst bibliographies in which paper titles are typeset as hyperlinks. Here's an example (with links typeset in blue):
 
 <center>
